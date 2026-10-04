@@ -1,30 +1,29 @@
  Ejercicio 1 — WordPress: Construcciones Nova
 
-Web creada con WordPress para la actividad **UP01: Internet, Navegadores y Servidores**.
+Proyecto realizado para la actividad **UP01: Internet, Navegadores y Servidores**.
 
-   Trabajo realizado
+   Requisitos realizados
 
 - Dominio local: `http://www.miproyecto.local/`
-- 3 usuarios con diferentes perfiles.
-- Página principal y diseño personalizado para **Construcciones Nova**.
-- Página de acceso: `/iniciar-sesion/`.
-- Formulario de contacto: `/contacto/`.
+- Tres perfiles de usuario configurados.
+- Tema y portada diseñados gráficamente para **Construcciones Nova**.
+- Servicio de inicio de sesión mediante **Theme My Login**: `/iniciar-sesion/`.
+- Servicio de formulario de contacto mediante **WPForms**: `/contacto/`.
 
-## Diseño de la web
+   Diseño
 
-La página está enfocada en una empresa de construcción y reformas. Se han añadido diferentes secciones con información sobre los servicios de la empresa y un diseño adaptado al tema.
+La web está diseñada para una empresa de construcción y reformas, con diferentes apartados sobre construcción, reformas, mantenimiento y otros servicios.
 
-   Copia y restauración
+ Restauración del contenido
 
-En `wordpress-export/` se encuentra el archivo XML exportado desde WordPress.
-
-Para restaurar el contenido:
+El archivo de exportación de WordPress se encuentra en `wordpress-export/`. Para restaurarlo en otra instalación:
 
 1. Instalar WordPress.
-2. Instalar los plugins utilizados en el proyecto.
-3. Entrar en **Herramientas → Importar → WordPress**.
-4. Seleccionar el archivo XML de `wordpress-export/`.
+2. Instalar y activar **Theme My Login** y **WPForms**.
+3. Ir a **Herramientas → Importar → WordPress**.
+4. Seleccionar el archivo XML que se encuentra dentro de `wordpress-export/`.
+5. Importar el contenido y asignarlo al usuario correspondiente.
 
-También se incluye `wordpress.sql`, que contiene una copia de la base de datos.
+También se incluye el archivo `wordpress.sql` con una copia de la base de datos.
 
-Las contraseñas y otros datos privados no están incluidos en el repositorio.
+> Las contraseñas y otros datos privados no se incluyen en el repositorio.
