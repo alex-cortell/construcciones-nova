@@ -1,8 +1,8 @@
- Ejercicio 1 — WordPress: Construcciones Nova
+  Ejercicio 1 — WordPress: Construcciones Nova
 
 Proyecto realizado para la actividad **UP01: Internet, Navegadores y Servidores**.
 
- Requisitos realizados
+   Requisitos realizados
 
 - Dominio local: `http://www.miproyecto.local/`
 - Tres perfiles de usuario configurados.
@@ -24,10 +24,11 @@ Para poder ver el proyecto en otro ordenador, independientemente de si se usa Wi
 4. Copiar los archivos del proyecto en la carpeta de WordPress.
 5. Ir a **Herramientas → Importar → WordPress**.
 6. Seleccionar el archivo XML que se encuentra en `wordpress-export/`.
-7. Importar el contenido y asignarlo al usuario correspondiente.
+7. Importar el contenido.
 8. Configurar el dominio local `www.miproyecto.local` y añadirlo al archivo `hosts`.
 9. Abrir `http://www.miproyecto.local/` en el navegador.
 
 También se incluye el archivo `wordpress.sql` como copia de la base de datos.
 
+> Las contraseñas y otros datos privados no se incluyen en el repositorio.
 > Las contraseñas y otros datos privados no se incluyen en el repositorio.
