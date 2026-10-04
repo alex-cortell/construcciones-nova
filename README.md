@@ -1,10 +1,10 @@
- Ejercicio 1 — WordPress: Construcciones Nova
+  Ejercicio 1 — WordPress: Construcciones Nova
 
 Proyecto realizado para la actividad **UP01: Internet, Navegadores y Servidores**.
 
    Requisitos realizados
 
-- Dominio local: `http://www.miproyecto.local/`
+- Dominio local: `http://www.miproyecto.local/` *(solo se puede ver desde mi PC por estar configurado como dominio local)*
 - Tres perfiles de usuario configurados.
 - Tema y portada diseñados gráficamente para **Construcciones Nova**.
 - Servicio de inicio de sesión mediante **Theme My Login**: `/iniciar-sesion/`.
@@ -12,9 +12,9 @@ Proyecto realizado para la actividad **UP01: Internet, Navegadores y Servidores*
 
    Diseño
 
-La web está diseñada para una empresa de construcción y reformas, con diferentes apartados sobre construcción, reformas, mantenimiento y otros servicios.
+La web está hecha para una empresa de construcción y reformas, con diferentes apartados sobre construcción, reformas, mantenimiento y otros servicios.
 
- Restauración del contenido
+   Restauración del contenido
 
 El archivo de exportación de WordPress se encuentra en `wordpress-export/`. Para restaurarlo en otra instalación:
 
