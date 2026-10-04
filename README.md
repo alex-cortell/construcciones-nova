@@ -1,10 +1,10 @@
-  Ejercicio 1 — WordPress: Construcciones Nova
+   Ejercicio 1 — WordPress: Construcciones Nova
 
 Proyecto realizado para la actividad **UP01: Internet, Navegadores y Servidores**.
 
    Requisitos realizados
 
-- Dominio local: `http://www.miproyecto.local/` *(solo se puede ver desde mi PC por estar configurado como dominio local)*
+- Dominio local: `http://www.miproyecto.local/`
 - Tres perfiles de usuario configurados.
 - Tema y portada diseñados gráficamente para **Construcciones Nova**.
 - Servicio de inicio de sesión mediante **Theme My Login**: `/iniciar-sesion/`.
@@ -16,14 +16,15 @@ La web está hecha para una empresa de construcción y reformas, con diferentes 
 
    Restauración del contenido
 
-El archivo de exportación de WordPress se encuentra en `wordpress-export/`. Para restaurarlo en otra instalación:
+Para poder ver el proyecto en otro PC hay que hacer lo siguiente:
 
-1. Instalar WordPress.
+1. Instalar XAMPP y WordPress.
 2. Instalar y activar **Theme My Login** y **WPForms**.
-3. Ir a **Herramientas → Importar → WordPress**.
-4. Seleccionar el archivo XML que se encuentra dentro de `wordpress-export/`.
-5. Importar el contenido y asignarlo al usuario correspondiente.
+3. Copiar los archivos del proyecto en la carpeta de WordPress.
+4. Importar el archivo `wordpress.sql` en phpMyAdmin.
+5. Configurar el dominio local `www.miproyecto.local` en XAMPP y en el archivo `hosts`.
+6. Abrir `http://www.miproyecto.local/` en el navegador.
 
-También se incluye el archivo `wordpress.sql` con una copia de la base de datos.
+También se incluye el archivo de exportación XML en `wordpress-export/`.
 
 > Las contraseñas y otros datos privados no se incluyen en el repositorio.
