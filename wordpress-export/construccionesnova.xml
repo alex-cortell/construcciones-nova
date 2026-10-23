@@ -35,7 +35,7 @@
 	<wp:base_site_url>http://www.miproyecto.local</wp:base_site_url>
 	<wp:base_blog_url>http://www.miproyecto.local</wp:base_blog_url>
 
-		<wp:author><wp:author_id>1</wp:author_id><wp:author_login><![CDATA[cordex]]></wp:author_login><wp:author_email><![CDATA[alexcortell45@gmail.com]]></wp:author_email><wp:author_display_name><![CDATA[cordex]]></wp:author_display_name><wp:author_first_name><![CDATA[]]></wp:author_first_name><wp:author_last_name><![CDATA[]]></wp:author_last_name></wp:author>
+		<wp:author><wp:author_id>1</wp:author_id><wp:author_login><![CDATA[cordex]]></wp:author_login><wp:author_email><![CDATA[correo-omitido@example.com]]></wp:author_email><wp:author_display_name><![CDATA[cordex]]></wp:author_display_name><wp:author_first_name><![CDATA[]]></wp:author_first_name><wp:author_last_name><![CDATA[]]></wp:author_last_name></wp:author>
 
 		<wp:category>
 		<wp:term_id>1</wp:term_id>

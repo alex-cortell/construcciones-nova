@@ -72,7 +72,7 @@ function tml_admin_register_settings() {
 				}
 
 				// Register the setting
-				register_setting( $page, $field_id, $field['sanitize_callback'] );
+				register_setting( $page, $field_id, isset( $field['sanitize_callback'] ) ? $field['sanitize_callback'] : array() );
 			}
 		}
 	}
@@ -108,7 +108,7 @@ function tml_admin_get_settings_sections() {
 			),
 			'tml_settings_registration' => array(
 				'title'    => __( 'Registration', 'theme-my-login' ),
-				'callback' => '__return_null',
+				'callback' => 'tml_admin_setting_callback_registration_section',
 				'page'     => 'theme-my-login',
 			),
 			'tml_settings_slugs'        => array(
@@ -154,33 +154,59 @@ function tml_admin_get_settings_fields() {
 			'callback'          => 'tml_admin_setting_callback_radio_group_field',
 			'sanitize_callback' => 'sanitize_text_field',
 			'args'              => array(
-				'label_for' => 'tml_login_type',
-				'legend'    => __( 'Login Type', 'theme-my-login' ),
-				'options'   => array(
+				'description' => tml_admin_get_extension_suggestion( '2fa', '2FA', __( 'Add authenticator-app two-factor authentication to logins.', 'theme-my-login' ) ),
+				'label_for'   => 'tml_login_type',
+				'legend'      => __( 'Login Type', 'theme-my-login' ),
+				'options'     => array(
 					'default'  => __( 'Default', 'theme-my-login' ),
 					'username' => __( 'Username only', 'theme-my-login' ),
 					'email'    => __( 'Email only', 'theme-my-login' ),
 				),
-				'checked'   => get_site_option( 'tml_login_type', 'default' ),
+				'checked'     => get_site_option( 'tml_login_type', 'default' ),
 			),
 		),
 	);
 
 	// Registration
-	$fields['tml_settings_registration'] = array(
+	$fields['tml_settings_registration'] = array();
+
+	// Anyone can register. On multisite, the network's registration setting overrides this option.
+	if ( ! is_multisite() ) {
+		$fields['tml_settings_registration']['users_can_register'] = array(
+			'title'    => __( 'Membership' ), // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- reusing WP core's translated "Membership" string (see wp-admin/options-general.php).
+			'callback' => 'tml_admin_setting_callback_checkbox_field',
+			'args'     => array(
+				'label_for' => 'users_can_register',
+				'label'     => __( 'Anyone can register' ), // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- reusing WP core's translated "Anyone can register" string (see wp-admin/options-general.php).
+				'value'     => '1',
+				'checked'   => get_option( 'users_can_register' ),
+			),
+		);
+	}
+
+	$fields['tml_settings_registration'] += array(
 		// Registration type
 		'tml_registration_type' => array(
 			'title'             => __( 'Registration Type', 'theme-my-login' ),
 			'callback'          => 'tml_admin_setting_callback_radio_group_field',
 			'sanitize_callback' => 'sanitize_text_field',
 			'args'              => array(
-				'label_for' => 'tml_registration_type',
-				'legend'    => __( 'Registration Type', 'theme-my-login' ),
-				'options'   => array(
+				'description' => implode(
+					'<br />',
+					array_filter(
+						array(
+							tml_admin_get_extension_suggestion( 'moderation', 'Moderation', __( 'Require email confirmation or admin approval for new users.', 'theme-my-login' ) ),
+							tml_admin_get_extension_suggestion( 'recaptcha', 'reCAPTCHA', __( 'Block spam bots on login, registration and lost password forms.', 'theme-my-login' ) ),
+						)
+					)
+				),
+				'label_for'   => 'tml_registration_type',
+				'legend'      => __( 'Registration Type', 'theme-my-login' ),
+				'options'     => array(
 					'default' => __( 'Default', 'theme-my-login' ),
 					'email'   => __( 'Email only', 'theme-my-login' ),
 				),
-				'checked'   => get_site_option( 'tml_registration_type', 'default' ),
+				'checked'     => get_site_option( 'tml_registration_type', 'default' ),
 			),
 		),
 		// User passwords
@@ -189,10 +215,11 @@ function tml_admin_get_settings_fields() {
 			'callback'          => 'tml_admin_setting_callback_checkbox_field',
 			'sanitize_callback' => 'sanitize_text_field',
 			'args'              => array(
-				'label_for' => 'tml_user_passwords',
-				'label'     => __( 'Allow users to set their own password', 'theme-my-login' ),
-				'value'     => '1',
-				'checked'   => get_site_option( 'tml_user_passwords' ),
+				'description' => tml_admin_get_extension_suggestion( 'security', 'Security', __( 'Set password rules and lock out brute-force attacks.', 'theme-my-login' ) ),
+				'label_for'   => 'tml_user_passwords',
+				'label'       => __( 'Allow users to set their own password', 'theme-my-login' ),
+				'value'       => '1',
+				'checked'     => get_site_option( 'tml_user_passwords' ),
 			),
 		),
 		// Auto-login
@@ -201,10 +228,11 @@ function tml_admin_get_settings_fields() {
 			'callback'          => 'tml_admin_setting_callback_checkbox_field',
 			'sanitize_callback' => 'sanitize_text_field',
 			'args'              => array(
-				'label_for' => 'tml_auto_login',
-				'label'     => __( 'Automatically log in users after registration', 'theme-my-login' ),
-				'value'     => '1',
-				'checked'   => get_site_option( 'tml_auto_login' ),
+				'description' => tml_admin_get_extension_suggestion( 'redirection', 'Redirection', __( 'Choose where users land after they register or log in, by role.', 'theme-my-login' ) ),
+				'label_for'   => 'tml_auto_login',
+				'label'       => __( 'Automatically log in users after registration', 'theme-my-login' ),
+				'value'       => '1',
+				'checked'     => get_site_option( 'tml_auto_login' ),
 			),
 		),
 	);
@@ -254,6 +282,30 @@ function tml_admin_setting_callback_slugs_section() {
 	?>
 
 <p><?php esc_html_e( 'The slugs defined here will be used to generate the URL to the corresponding action. You can see this URL below the slug field. If you would like to use pages for these actions, simply make sure the slug for the action below matches the slug of the page you would like to use for that action.', 'theme-my-login' ); ?></p>
+
+	<?php
+}
+
+/**
+ * Render the "Registration" section.
+ *
+ * @since 7.3
+ */
+function tml_admin_setting_callback_registration_section() {
+	if ( ! is_multisite() ) {
+		return;
+	}
+	?>
+
+<p>
+	<?php
+	printf(
+		/* translators: %s: The Network Settings URL. */
+		wp_kses_post( __( 'Whether new users can register is set in <a href="%s">Network Settings</a>.', 'theme-my-login' ) ),
+		esc_url( network_admin_url( 'settings.php' ) )
+	);
+	?>
+</p>
 
 	<?php
 }
@@ -632,6 +684,8 @@ function tml_admin_settings_page() {
 
 		<?php submit_button(); ?>
 	</form>
+
+	<?php tml_admin_extension_suggestions_toggle(); ?>
 </div>
 
 	<?php

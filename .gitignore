@@ -1,1 +1,38 @@
-wp-config.php 
+# Configuración y secretos
+wp-config.php
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Cachés y archivos temporales
+wp-content/cache/
+wp-content/upgrade/
+wp-content/uploads/wpforms/cache/
+wp-content/uploads/wc-logs/
+*.log
+
+# Copias de seguridad y volcados de bases de datos
+*.sql
+*.sql.gz
+*.zip
+*.tar
+*.tar.gz
+*.bak
+
+# Permitir la base de datos preparada para la entrega
+!database/wordpress-profesor.sql
+
+# Copias originales con datos personales
+wordpress-export/construccionesnova-original.xml
+
+# Caché y datos de formularios
+wp-content/uploads/wpforms/cache/
+
+# Archivos descargables privados de WooCommerce
+wp-content/uploads/woocommerce_uploads/

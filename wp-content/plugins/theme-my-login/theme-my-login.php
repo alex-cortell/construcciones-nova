@@ -11,8 +11,9 @@ Plugin Name: Theme My Login
 Plugin URI: https://thememylogin.com
 Description: Creates an alternate login, registration and password recovery experience within your theme.
 // x-release-please-start-version
-Version: 7.2.2
+Version: 7.3.1
 // x-release-please-end
+Requires at least: 5.7
 Author: Theme My Login
 Author URI: https://thememylogin.com
 License: GPLv2
@@ -27,7 +28,7 @@ Network: true
  * @since 7.0
  */
 // x-release-please-start-version
-define( 'THEME_MY_LOGIN_VERSION', '7.2.2' );
+define( 'THEME_MY_LOGIN_VERSION', '7.3.1' );
 // x-release-please-end
 
 /**
@@ -39,10 +40,13 @@ define( 'THEME_MY_LOGIN_PATH', plugin_dir_path( __FILE__ ) );
 
 /**
  * Stores the path to the plugin's main file, as registered with WordPress.
+ * This file is the main file once built, so the repo-root loader defines it first.
  *
  * @since 7.2.1
  */
-define( 'THEME_MY_LOGIN_FILE', dirname( THEME_MY_LOGIN_PATH ) . '/theme-my-login.php' );
+if ( ! defined( 'THEME_MY_LOGIN_FILE' ) ) {
+	define( 'THEME_MY_LOGIN_FILE', __FILE__ );
+}
 
 /**
  * Stores the URL to TML.
@@ -109,6 +113,7 @@ if ( is_admin() ) {
 	require THEME_MY_LOGIN_PATH . 'admin/functions.php';
 	require THEME_MY_LOGIN_PATH . 'admin/settings.php';
 	require THEME_MY_LOGIN_PATH . 'admin/extensions.php';
+	require THEME_MY_LOGIN_PATH . 'admin/promotions.php';
 	require THEME_MY_LOGIN_PATH . 'admin/hooks.php';
 
 	// Prepare for something somewhat amazing!

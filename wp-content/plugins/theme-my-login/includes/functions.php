@@ -298,6 +298,8 @@ function tml_enqueue_scripts() {
 			'showPasswordLabel' => __( 'Show password' ),
 			// phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- reuses WP core's translated wp-login.php strings verbatim.
 			'hidePasswordLabel' => __( 'Hide password' ),
+			// phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- reuses WP core's translated wp-ajax-response string verbatim.
+			'ajaxErrorMessage'  => __( 'An error occurred while processing your request. Please try again later.' ),
 		)
 	);
 
@@ -310,13 +312,26 @@ function tml_enqueue_scripts() {
 }
 
 /**
+ * Enqueue the password strength meter when a form using it is rendered.
+ *
+ * Covers forms rendered outside their own action, such as via shortcode or widget.
+ *
+ * @since 7.2.3
+ *
+ * @param string $name The form name.
+ */
+function tml_enqueue_form_scripts( $name ) {
+	if ( 'resetpass' === $name || ( 'register' === $name && tml_allow_user_passwords() ) ) {
+		wp_enqueue_script( 'password-strength-meter' );
+	}
+}
+
+/**
  * Do the `login_head` action hook.
  *
  * @since 7.0.13
  */
 function tml_do_login_head() {
-	global $wp_version;
-
 	if ( ! tml_is_action() ) {
 		return;
 	}
@@ -325,12 +340,8 @@ function tml_do_login_head() {
 	remove_action( 'login_head', 'wp_print_head_scripts', 9 );
 
 	// Don't index TML actions
-	if ( version_compare( $wp_version, '5.7', '>=' ) ) {
-		add_filter( 'wp_robots', 'wp_robots_sensitive_page' );
-		add_action( 'login_head', 'wp_strict_cross_origin_referrer' );
-	} else {
-		add_action( 'login_head', 'wp_sensitive_page_meta' );
-	}
+	add_filter( 'wp_robots', 'wp_robots_sensitive_page' );
+	add_action( 'login_head', 'wp_strict_cross_origin_referrer' );
 
 	/** This action is documented in wp-login.php */
 	do_action( 'login_head' );
@@ -904,8 +915,18 @@ function tml_handle_auto_login( $user_id ) {
 		return;
 	}
 
+	// A followed activation link alone must not log the visitor in.
+	if ( in_array( current_filter(), array( 'wpmu_activate_user', 'wpmu_activate_blog' ), true ) && ! tml_is_post_request() ) {
+		return;
+	}
+
 	if ( 'wpmu_activate_blog' === current_filter() ) {
 		$user_id = func_get_arg( 1 );
+
+		// Core reuses any existing account matching the signup's username.
+		if ( (int) tml_get_data( 'activation_new_user_id' ) !== (int) $user_id ) {
+			return;
+		}
 	}
 
 	wp_set_auth_cookie( $user_id );
